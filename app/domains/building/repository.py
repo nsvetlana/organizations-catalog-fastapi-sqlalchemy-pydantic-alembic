@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from domains.building.models import Building
+from app.domains.building.models import Building
 
 def get_building(db: Session, building_id: int):
     return db.query(Building).filter(Building.id == building_id).first()

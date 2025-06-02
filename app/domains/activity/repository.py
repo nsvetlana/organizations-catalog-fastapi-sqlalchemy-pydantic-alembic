@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from domains.activity.models import Activity
-from domains.activity import schemas
+from app.domains.activity.models import Activity
+from app.domains.activity import schemas
 
 def get_activity(db: Session, activity_id: int) -> Activity:
     return db.query(Activity).filter(Activity.id == activity_id).first()

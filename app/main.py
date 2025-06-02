@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter, Depends
 from alembic import command
 from alembic.config import Config
 
@@ -8,10 +8,10 @@ from app.db.base import Base
 from app.db.session import engine
 
 # Import API routers from our domains.
-from api.v1.organization_routes import router as organization_router
-from api.v1.building_routes import router as building_router
-from api.v1.activity_routes import router as activity_router
-from api.v1.auth_routes import router as auth_router
+from app.api.v1.organization_routes import router as organization_router
+from app.api.v1.building_routes import router as building_router
+from app.api.v1.activity_routes import router as activity_router
+from app.api.v1.auth_routes import router as auth_router
 from app.auth import get_current_user
 
 def run_migrations():
@@ -43,19 +43,19 @@ app.include_router(
     organization_router,
     prefix="/organizations",
     tags=["Organizations"],
-    dependencies=[{"dependency": get_current_user}]
+    dependencies=[Depends(get_current_user)]
 )
 app.include_router(
     building_router,
     prefix="/buildings",
     tags=["Buildings"],
-    dependencies=[{"dependency": get_current_user}]
+    dependencies=[Depends(get_current_user)]
 )
 app.include_router(
     activity_router,
     prefix="/activities",
     tags=["Activities"],
-    dependencies=[{"dependency": get_current_user}]
+    dependencies=[Depends(get_current_user)]
 )
 
 @app.get("/")
@@ -64,4 +64,4 @@ async def index():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)

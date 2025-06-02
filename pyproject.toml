@@ -8,12 +8,16 @@ authors = [
   { name = "Your Name", email = "your.email@example.com" }
 ]
 dependencies = [
-  "fastapi>=0.95.0",
+  "fastapi[standard,standart]>=0.95.0",
   "uv>=0.5.9",
   "pydantic>=1.9.0",
   "sqlalchemy>=1.4.0",
   "alembic>=1.7.0",
-  "python-jose[cryptography]>=3.3.0"
+  "python-jose[cryptography]>=3.3.0",
+  "pytest>=8.3.5",
+  "httpx>=0.28.1",
+  "pydantic-settings>=2.9.1",
+  "psycopg2>=2.9.10",
 ]
 
 [tool.uv]

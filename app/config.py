@@ -1,4 +1,8 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Загружаем переменные окружения из файла .env
 
 class Settings(BaseSettings):
     DATABASE_URL: str  # Expects a PostgreSQL URL from the .env file.
@@ -11,5 +15,6 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+        extra = "allow"
 
 settings = Settings()

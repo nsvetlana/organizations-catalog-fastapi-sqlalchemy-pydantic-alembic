@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, validator
 
 class ActivityBase(BaseModel):
     name: str
@@ -23,7 +23,12 @@ class ActivityReadLevel2(BaseModel):
     id: int
     name: str
     parent_id: Optional[int] = None
-    children: List[ActivityReadLevel3] = []
+    children: List[ActivityReadLevel3] = Field(default_factory=list)
+
+    @validator("children", pre=True, always=True)
+    def set_children(cls, value):
+        # Если значение равно None, возвращаем пустой список.
+        return value or []
 
     class Config:
         orm_mode = True
@@ -33,7 +38,11 @@ class ActivityRead(BaseModel):
     id: int
     name: str
     parent_id: Optional[int] = None
-    children: List[ActivityReadLevel2] = []
+    children: List[ActivityReadLevel2] = Field(default_factory=list)
+
+    @validator("children", pre=True, always=True)
+    def set_children(cls, value):
+        return value or []
 
     class Config:
         orm_mode = True

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from domains.building import repository, schemas, models
+from app.domains.building import repository, schemas, models
 
 def get_building_details(db: Session, building_id: int):
     building = repository.get_building(db, building_id)

@@ -1,6 +1,14 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from app.db.base import Base
+
+# Ассоциативная таблица для связи многие-ко-многим между activities и organizations.
+activity_organizations = Table(
+    "activity_organizations",
+    Base.metadata,
+    Column("activity_id", Integer, ForeignKey("activities.id"), primary_key=True),
+    Column("organization_id", Integer, ForeignKey("organizations.id"), primary_key=True)
+)
 
 class Activity(Base):
     __tablename__ = "activities"
@@ -14,4 +22,11 @@ class Activity(Base):
         "Activity",
         backref="parent",
         remote_side=[id]
+    )
+
+    # Добавляем связь "organizations" (многие-ко-многим) с моделью Organization.
+    organizations = relationship(
+        "Organization",
+        secondary=activity_organizations,
+        back_populates="activities"
     )

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from domains.organization import repository, schemas
+from app.domains.organization import repository, schemas
 
 def get_organization_details(db: Session, organization_id: int):
     org = repository.get_organization(db, organization_id)

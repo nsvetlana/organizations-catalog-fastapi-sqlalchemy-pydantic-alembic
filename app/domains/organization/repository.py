@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from domains.organization import models, schemas
+from app.domains.organization import models, schemas
 
 
 def get_organization(db: Session, organization_id: int):
